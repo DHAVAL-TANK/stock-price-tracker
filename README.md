@@ -15,11 +15,10 @@ npm install
 npm run start
 ```
 
-## Run tests
+## Screenshot
+1. Homepage
+![Homepage](https://github.com/Dhaval-Tank/stock-price-tracker/main/screenshot/stock-price.png?raw=true)
 
-```sh
-npm run test
-```
 
 ## Show your support
 
