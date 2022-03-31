@@ -17,7 +17,7 @@ npm run start
 
 ## Screenshot
 1. Homepage
-![Homepage](https://github.com/Dhaval-Tank/stock-price-tracker/main/screenshot/stock-price.png?raw=true)
+![Homepage](https://github.com/Dhaval-Tank/stock-price-tracker/blob/main/screenshot/stock-price.PNG?raw=true)
 
 
 ## Show your support
