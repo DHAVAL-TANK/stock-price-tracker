@@ -6,7 +6,8 @@ class Stock extends React.Component {
     super(props);
     this.state = {
       stockChartXValues: [],
-      stockChartYValues: []
+      stockChartYValues: [],
+      symbol:"FB"
     }
   }
 
@@ -16,10 +17,8 @@ class Stock extends React.Component {
 
   fetchStock() {
     const pointerToThis = this;
-    console.log(pointerToThis);
-    const API_KEY = 'HGJWFG4N8AQ66ICD';
-    let StockSymbol = 'FB';
-    let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${StockSymbol}&outputsize=compact&apikey=${API_KEY}`;
+    const API_KEY = '9OZJOS9GDC3EQPLJ';
+    let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${this.state.symbol}&outputsize=compact&apikey=${API_KEY}`;
     let stockChartXValuesFunction = [];
     let stockChartYValuesFunction = [];
 
@@ -31,14 +30,10 @@ class Stock extends React.Component {
       )
       .then(
         function(data) {
-          console.log(data);
-
           for (var key in data['Time Series (Daily)']) {
             stockChartXValuesFunction.push(key);
             stockChartYValuesFunction.push(data['Time Series (Daily)'][key]['1. open']);
           }
-
-          // console.log(stockChartXValuesFunction);
           pointerToThis.setState({
             stockChartXValues: stockChartXValuesFunction,
             stockChartYValues: stockChartYValuesFunction
@@ -48,9 +43,23 @@ class Stock extends React.Component {
   }
 
   render() {
+    
     return (
       <div>
-        <h1>Stock Market</h1>
+        <h2>Stock Market Price ( in USD )
+           <select  value={this.state.symbol} onChange={(event)=>
+           { this.setState({ symbol: event.target.value})
+           this.fetchStock()
+           return;
+          }
+          }  style={{margin:20,padding:10}}>
+          <option value='FB'>Facebook</option>
+          <option value='IBM'>IBM</option>
+          <option value='TSLA'>Tesla</option>
+          <option value='GOOGL'>Google</option>
+          <option value='AMZN'>Amazon</option>
+        </select></h2>
+       
         <Plot
           data={[
             {
@@ -61,7 +70,7 @@ class Stock extends React.Component {
               marker: {color: 'red'},
             }
           ]}
-          layout={{width: 720, height: 440, title: 'A Fancy Plot'}}
+          layout={{width: 1200, height: 550, title: 'A Fancy Plot  '}}
         />
       </div>
     )
