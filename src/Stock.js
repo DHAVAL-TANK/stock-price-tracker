@@ -7,21 +7,20 @@ class Stock extends React.Component {
     this.state = {
       stockChartXValues: [],
       stockChartYValues: [],
-      symbol:"FB"
+      symbol:"RELIANCE.BSE"
     }
   }
 
   componentDidMount() {
-    this.fetchStock();
+    this.fetchStock("RELIANCE.BSE");
   }
 
-  fetchStock() {
+  fetchStock(symbol) {
     const pointerToThis = this;
     const API_KEY = '9OZJOS9GDC3EQPLJ';
-    let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${this.state.symbol}&outputsize=compact&apikey=${API_KEY}`;
+    let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&outputsize=compact&apikey=${API_KEY}`;
     let stockChartXValuesFunction = [];
     let stockChartYValuesFunction = [];
-
     fetch(API_Call)
       .then(
         function(response) {
@@ -30,6 +29,9 @@ class Stock extends React.Component {
       )
       .then(
         function(data) {
+          if(data.Note) {
+            alert(data.Note)
+          }
           for (var key in data['Time Series (Daily)']) {
             stockChartXValuesFunction.push(key);
             stockChartYValuesFunction.push(data['Time Series (Daily)'][key]['1. open']);
@@ -49,11 +51,11 @@ class Stock extends React.Component {
         <h2>Stock Market Price ( in USD )
            <select  value={this.state.symbol} onChange={(event)=>
            { this.setState({ symbol: event.target.value})
-           this.fetchStock()
+           this.fetchStock(event.target.value)
            return;
           }
           }  style={{margin:20,padding:10}}>
-          <option value='FB'>Facebook</option>
+          <option value='RELIANCE.BSE'>Reliance</option>
           <option value='IBM'>IBM</option>
           <option value='TSLA'>Tesla</option>
           <option value='GOOGL'>Google</option>
